@@ -1,7 +1,42 @@
 import { useState, useRef } from "react";
+import {OpenAI} from "openai";
+import axios from "axios"
+
+// console.log(import.meta.env.VITE_OPENAI_API_KEY)
+
+const openai = new OpenAI({
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+  dangerouslyAllowBrowser: true,
+});
+
+
+// const URL = "https://api.openai.com/v1/chat/completions";
+
+const chatGenerator = async () => {
+  // const requestOptions = {
+  //   // method: "POST",
+  //   header: {
+  //     'content type': "application/json",
+  //     authorization: `bearer ${import.meta.env.VITE_OPENAI_API_KEY}`
+  //   },
+  //   body: JSON.stringify({
+  //     messages: [{ role: "system", content: "You are a helpful assistant." }],
+  //     model: "gpt-3.5-turbo",
+  //   })
+  // }
+
+  const chatCompletion = await openai.chat.completions.create({
+    model: "gpt-3.5-turbo",
+    messages: [{ role: "user", content: "What is today's date?" }]
+  })
+
+  console.log(chatCompletion)
+}
 
 function ChatBox() {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([
+    {id: Date.now(), text: "May I help you today?", sender: "bot"}
+  ]);
   const [inputValue, setInputValue] = useState("");
   const chatInputRef = useRef(null);
 
@@ -26,6 +61,7 @@ function ChatBox() {
           sender: "bot",
         };
         setMessages((prevMessages) => [...prevMessages, newBotMessage]);
+        // chatGenerator()
       }, 3000);
     }
   };
@@ -53,16 +89,6 @@ function ChatBox() {
       </header>
       <div className="chat-body w-full h-full justify-between pt-10 flex flex-col">
         <div className="chat-body w-full max-h-full overflow-y-scroll gap-4 grid grid-cols-1">
-          <div className="chat chat-bot h-max max-w-md flex relative">
-            <img
-              src="../bot.svg"
-              alt="bot"
-              className="w-4 h-4 absolute bottom-0"
-            />
-            <p className="chat-bot-msg bg-bot text-white ml-4 h-max max-w-md text-base rounded-tl-chat-box rounded-r-chat-box p-4">
-              May I help you today?
-            </p>
-          </div>
           {sortedMessages.map((message) => {
             return (
               <div
