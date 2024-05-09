@@ -4,10 +4,8 @@ import ChatBox from "./components/ChatBox";
 function App() {
   return (
     <>
-      <main className="w-full min-h-svh h-full flex justify-center">
-        {/* <LandingPage /> */}
-        <ChatBox />
-      </main>
+      {/* <LandingPage /> */}
+      <ChatBox />
     </>
   );
 }
