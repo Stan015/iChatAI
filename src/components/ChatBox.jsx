@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { useState, useRef, useEffect } from "react";
 import { OpenAI } from "openai";
 import { RiDeleteBin2Fill } from "react-icons/ri";
