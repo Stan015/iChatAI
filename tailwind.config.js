@@ -6,10 +6,18 @@ export default {
       backgroundColor: {
         primary: "#282834",
         bot: "#45415A",
-        human: "#725DE5"
+        human: "#725DE5",
+        secondary: "#725DE5"
       },
       borderRadius: {
         "chat-box": "3rem",
+      },
+      colors: {
+        bot: "#45415A",
+        human: "#725DE5"
+      },
+      outlineColor: {
+        clr1: "#725DE5"
       }
     },
   },
