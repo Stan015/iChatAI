@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { OpenAI } from "openai";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import { useErrorBoundary } from "react-error-boundary";
@@ -96,13 +96,15 @@ function ChatBox() {
     window.location.reload();
   };
 
-  useEffect(() => {
-    handleScrollToEnd();
-  }, [messages]);
-
-  const handleScrollToEnd = () => {
+  const handleScrollToEnd = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  }, []);
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      handleScrollToEnd();
+    }
+  }, [messages, handleScrollToEnd]);
 
   return (
     <div className="flex flex-col w-3/4 max-md:w-full items-center py-10 px-6 min-h-full">
